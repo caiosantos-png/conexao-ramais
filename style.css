@@ -1,0 +1,264 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#eef2f7;
+}
+
+.container{
+    width:95%;
+    max-width:1100px;
+    margin:30px auto;
+}
+
+/* HEADER */
+
+header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid #0F4C81;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+h1{
+    margin-top:15px;
+    color:#0F4C81;
+    font-size:32px;
+}
+
+/* TOPO */
+
+.topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+#pesquisa{
+    flex:1;
+    height:48px;
+    padding:0 18px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+#novo{
+    height:48px;
+    padding:0 22px;
+    background:#F7941D;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+
+#novo:hover{
+    background:#e78410;
+    transform:translateY(-2px);
+}
+
+/* TABELA */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+th{
+    background:#0F4C81;
+    color:#fff;
+    padding:16px;
+    text-align:left;
+    font-size:15px;
+}
+
+td{
+    padding:18px 16px;
+    border-bottom:1px solid #ececec;
+    vertical-align:middle;
+}
+
+tbody tr:nth-child(even){
+    background:#fafafa;
+}
+
+tbody tr:hover{
+    background:#eef6ff;
+    transition:.2s;
+}
+
+/* BOTÕES */
+
+td:last-child{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+button.editar,
+button.excluir{
+
+    width:38px;
+    height:38px;
+
+    border:none;
+    border-radius:8px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+button.editar{
+    background:#0F4C81;
+    color:#fff;
+}
+
+button.editar:hover{
+    background:#0c3b63;
+    transform:scale(1.08);
+}
+
+button.excluir{
+    background:#d32f2f;
+    color:#fff;
+}
+
+button.excluir:hover{
+    background:#b71c1c;
+    transform:scale(1.08);
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.formulario{
+    width:380px;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.formulario h2{
+    color:#0F4C81;
+    margin-bottom:15px;
+}
+
+.formulario input{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+.formulario input:focus{
+    border-color:#0F4C81;
+}
+
+.botoes{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+}
+
+#salvar,
+#cancelar{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    color:#fff;
+    font-weight:bold;
+    transition:.25s;
+}
+
+#salvar{
+    background:#2e7d32;
+}
+
+#salvar:hover{
+    background:#256628;
+}
+
+#cancelar{
+    background:#777;
+}
+
+#cancelar:hover{
+    background:#555;
+}
+
+/* RESPONSIVO */
+
+@media (max-width:768px){
+
+    .topo{
+        flex-direction:column;
+    }
+
+    #pesquisa,
+    #novo{
+        width:100%;
+    }
+
+    table{
+        font-size:14px;
+    }
+
+    th,
+    td{
+        padding:12px;
+    }
+
+    .logo{
+        width:90px;
+        height:90px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+}

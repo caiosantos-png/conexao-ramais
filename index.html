@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Conexão Rastreadores - Ramais</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+
+            <img src="logo.png.png" class="logo">
+
+            <h1>Lista de Ramais</h1>
+
+        </header>
+
+        <div class="topo">
+
+            <input
+                type="text"
+                id="pesquisa"
+                placeholder="Pesquisar funcionário, setor ou ramal...">
+
+            <button id="novo">
+                <i class="fa-solid fa-plus"></i>
+                Novo Ramal
+            </button>
+
+        </div>
+
+        <div class="modal" id="modal">
+
+            <div class="formulario">
+
+                <h2 id="tituloModal">Novo Ramal</h2>
+
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Nome">
+
+                <input
+                    type="text"
+                    id="setor"
+                    placeholder="Setor">
+
+                <input
+                    type="text"
+                    id="ramal"
+                    placeholder="Ramal">
+
+                <div class="botoes">
+
+                    <button id="salvar">Salvar</button>
+
+                    <button id="cancelar">Cancelar</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Nome</th>
+                    <th>Setor</th>
+                    <th>Ramal</th>
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="listaRamais"></tbody>
+
+        </table>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
