@@ -362,3 +362,50 @@ button.excluir:hover{
     font-size:14px;
     min-height:18px;
 }
+
+/* BOTÃO FLUTUANTE DE WHATSAPP */
+
+.whatsapp-flutuante{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+
+    width:58px;
+    height:58px;
+
+    background:#25D366;
+    color:#fff;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:30px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.3);
+
+    text-decoration:none;
+
+    z-index:2000;
+
+    transition:.25s;
+}
+
+.whatsapp-flutuante:hover{
+    background:#1ebe5b;
+    transform:scale(1.08);
+}
+
+@media (max-width:768px){
+
+    .whatsapp-flutuante{
+        width:52px;
+        height:52px;
+        font-size:26px;
+        bottom:18px;
+        right:18px;
+    }
+
+}
