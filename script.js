@@ -25,13 +25,15 @@ async function carregarRamais() {
     listar();
 }
 
-carregarRamais();
+// carregarRamais() é chamado pelo auth.js, depois que o login é confirmado.
 
 // ---------- LISTAR NA TELA ----------
 
 function listar(lista = ramais) {
 
     tabela.innerHTML = "";
+
+    const ehAdmin = (perfilAtual === "admin");
 
     lista.forEach((item) => {
         tabela.innerHTML += `
@@ -44,7 +46,7 @@ function listar(lista = ramais) {
         <td>${item.ramal}</td>
 
         <td>
-
+            ${ehAdmin ? `
             <button class="editar" onclick="editar(${item.id})">
             ✏️
             </button>
@@ -52,7 +54,7 @@ function listar(lista = ramais) {
             <button class="excluir" onclick="excluir(${item.id})">
             🗑️
             </button>
-
+            ` : ""}
         </td>
 
         </tr>
@@ -82,6 +84,12 @@ document.getElementById("cancelar").onclick = () => {
 // ---------- SALVAR (INSERE OU ATUALIZA) ----------
 
 document.getElementById("salvar").onclick = async () => {
+
+    if (perfilAtual !== "admin") {
+        alert("Você não tem permissão para esta ação.");
+        modal.style.display = "none";
+        return;
+    }
 
     if (!nome.value || !setor.value || !ramal.value) {
         alert("Preencha todos os campos.");
@@ -138,6 +146,11 @@ document.getElementById("salvar").onclick = async () => {
 
 async function excluir(id) {
 
+    if (perfilAtual !== "admin") {
+        alert("Você não tem permissão para excluir ramais.");
+        return;
+    }
+
     if (confirm("Excluir este ramal?")) {
 
         const { error } = await supabase
@@ -158,6 +171,11 @@ async function excluir(id) {
 // ---------- EDITAR ----------
 
 function editar(id) {
+
+    if (perfilAtual !== "admin") {
+        alert("Você não tem permissão para editar ramais.");
+        return;
+    }
 
     const item = ramais.find(r => r.id === id);
     if (!item) return;
