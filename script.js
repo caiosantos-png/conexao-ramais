@@ -29,29 +29,48 @@ async function carregarRamais() {
 
 // ---------- LISTAR NA TELA ----------
 
+function iniciais(nome) {
+    const partes = nome.trim().split(" ").filter(Boolean);
+    const primeira = partes[0]?.[0] || "";
+    const ultima = partes.length > 1 ? partes[partes.length - 1][0] : "";
+    return (primeira + ultima).toUpperCase();
+}
+
 function listar(lista = ramais) {
 
     tabela.innerHTML = "";
 
     const ehAdmin = (perfilAtual === "admin");
 
+    if (lista.length === 0) {
+        tabela.innerHTML = `
+        <tr class="tabela-vazia">
+            <td colspan="4">Nenhum ramal encontrado.</td>
+        </tr>
+        `;
+        return;
+    }
+
     lista.forEach((item) => {
         tabela.innerHTML += `
         <tr>
 
-        <td>${item.nome}</td>
+        <td>
+            <span class="avatar-iniciais">${iniciais(item.nome)}</span>
+            ${item.nome}
+        </td>
 
         <td>${item.setor}</td>
 
-        <td>${item.ramal}</td>
+        <td class="coluna-ramal">${item.ramal}</td>
 
         <td>
             ${ehAdmin ? `
-            <button class="editar" onclick="editar(${item.id})">
+            <button class="editar" onclick="editar(${item.id})" title="Editar">
             ✏️
             </button>
 
-            <button class="excluir" onclick="excluir(${item.id})">
+            <button class="excluir" onclick="excluir(${item.id})" title="Excluir">
             🗑️
             </button>
             ` : ""}
