@@ -78,6 +78,8 @@
                 id="pesquisa"
                 placeholder="Pesquisar funcionário, setor ou ramal...">
 
+            <span class="contador" id="contador">0 ramais</span>
+
             <button id="novo" class="somente-admin">
                 <i class="fa-solid fa-plus"></i>
                 Novo Ramal
@@ -105,6 +107,13 @@
                     type="text"
                     id="ramal"
                     placeholder="Ramal">
+
+                <select id="cargo">
+                    <option value="">Sem cargo</option>
+                    <option value="Gestor">Gestor(a)</option>
+                    <option value="Supervisor">Supervisor(a)</option>
+                    <option value="Monitor">Monitor(a)</option>
+                </select>
 
                 <div class="botoes">
 
