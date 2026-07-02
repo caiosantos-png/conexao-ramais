@@ -74,9 +74,11 @@ function listar(lista = ramais) {
         <tr>
 
         <td>
-            <span class="avatar-iniciais">${iniciais(item.nome)}</span>
-            ${item.nome}
-            ${badgeCargo(item.cargo)}
+            <div class="celula-nome">
+                <span class="avatar-iniciais">${iniciais(item.nome)}</span>
+                ${item.nome}
+                ${badgeCargo(item.cargo)}
+            </div>
         </td>
 
         <td>${item.setor}</td>
@@ -84,6 +86,7 @@ function listar(lista = ramais) {
         <td class="coluna-ramal">${item.ramal}</td>
 
         <td>
+            <div class="celula-acoes">
             ${ehAdmin ? `
             <button class="editar" onclick="editar(${item.id})" title="Editar">
             ✏️
@@ -93,6 +96,7 @@ function listar(lista = ramais) {
             🗑️
             </button>
             ` : ""}
+            </div>
         </td>
 
         </tr>
