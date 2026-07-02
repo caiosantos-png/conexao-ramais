@@ -4,7 +4,26 @@ const tabela = document.getElementById("listaRamais");
 const modal = document.getElementById("modal");
 const tituloModal = document.getElementById("tituloModal");
 
-let editandoId = null; // null = criando um ramal novo / com valor = editando
+let editandoId = null;
+
+// ---------- FAVORITOS (localStorage) ----------
+
+function getFavoritos() {
+    try {
+        return JSON.parse(localStorage.getItem("ramais_favoritos") || "[]");
+    } catch { return []; }
+}
+
+function toggleFavorito(id) {
+    let favs = getFavoritos();
+    if (favs.includes(id)) {
+        favs = favs.filter(f => f !== id);
+    } else {
+        favs.push(id);
+    }
+    localStorage.setItem("ramais_favoritos", JSON.stringify(favs));
+    listar();
+}
 
 // ---------- CARREGAR DADOS DO SUPABASE ----------
 
@@ -27,7 +46,7 @@ async function carregarRamais() {
 
 // carregarRamais() é chamado pelo auth.js, depois que o login é confirmado.
 
-// ---------- LISTAR NA TELA ----------
+// ---------- HELPERS ----------
 
 function iniciais(nome) {
     const partes = nome.trim().split(" ").filter(Boolean);
@@ -47,11 +66,42 @@ function badgeCargo(cargo) {
     return `<span class="badge-cargo" style="background:${c.bg};color:${c.cor};">${cargo}</span>`;
 }
 
+function linhaRamal(item, ehAdmin, favs) {
+    const favoritado = favs.includes(item.id);
+    return `
+    <tr>
+        <td>
+            <div class="celula-nome">
+                <span class="avatar-iniciais">${iniciais(item.nome)}</span>
+                ${item.nome}
+                ${badgeCargo(item.cargo)}
+            </div>
+        </td>
+        <td>${item.setor}</td>
+        <td class="coluna-ramal">${item.ramal}</td>
+        <td>
+            <div class="celula-acoes">
+                <button class="btn-favorito ${favoritado ? "favoritado" : ""}"
+                    onclick="toggleFavorito(${item.id})"
+                    title="${favoritado ? "Remover dos favoritos" : "Adicionar aos favoritos"}">
+                    ${favoritado ? "⭐" : "☆"}
+                </button>
+                ${ehAdmin ? `
+                <button class="editar" onclick="editar(${item.id})" title="Editar">✏️</button>
+                <button class="excluir" onclick="excluir(${item.id})" title="Excluir">🗑️</button>
+                ` : ""}
+            </div>
+        </td>
+    </tr>
+    `;
+}
+
+// ---------- LISTAR NA TELA ----------
+
 function listar(lista = ramais) {
 
-    tabela.innerHTML = "";
-
     const ehAdmin = (perfilAtual === "admin");
+    const favs = getFavoritos();
 
     // Atualiza contador
     const contador = document.getElementById("contador");
@@ -59,6 +109,25 @@ function listar(lista = ramais) {
         const total = ramais.length;
         contador.textContent = total === 1 ? "1 ramal" : `${total} ramais`;
     }
+
+    // Seção de favoritos
+    const secaoFavs = document.getElementById("secaoFavoritos");
+    const tabelaFavs = document.getElementById("listaFavoritos");
+
+    const itensFavoritados = ramais.filter(r => favs.includes(r.id));
+
+    if (itensFavoritados.length > 0) {
+        secaoFavs.style.display = "block";
+        tabelaFavs.innerHTML = itensFavoritados
+            .map(item => linhaRamal(item, ehAdmin, favs))
+            .join("");
+    } else {
+        secaoFavs.style.display = "none";
+        tabelaFavs.innerHTML = "";
+    }
+
+    // Tabela principal
+    tabela.innerHTML = "";
 
     if (lista.length === 0) {
         tabela.innerHTML = `
@@ -69,38 +138,8 @@ function listar(lista = ramais) {
         return;
     }
 
-    lista.forEach((item) => {
-        tabela.innerHTML += `
-        <tr>
-
-        <td>
-            <div class="celula-nome">
-                <span class="avatar-iniciais">${iniciais(item.nome)}</span>
-                ${item.nome}
-                ${badgeCargo(item.cargo)}
-            </div>
-        </td>
-
-        <td>${item.setor}</td>
-
-        <td class="coluna-ramal">${item.ramal}</td>
-
-        <td>
-            <div class="celula-acoes">
-            ${ehAdmin ? `
-            <button class="editar" onclick="editar(${item.id})" title="Editar">
-            ✏️
-            </button>
-
-            <button class="excluir" onclick="excluir(${item.id})" title="Excluir">
-            🗑️
-            </button>
-            ` : ""}
-            </div>
-        </td>
-
-        </tr>
-        `;
+    lista.forEach(item => {
+        tabela.innerHTML += linhaRamal(item, ehAdmin, favs);
     });
 }
 
@@ -141,7 +180,6 @@ document.getElementById("salvar").onclick = async () => {
 
     if (editandoId === null) {
 
-        // INSERIR novo ramal no Supabase
         const { error } = await supabase
             .from("ramais")
             .insert({
@@ -159,7 +197,6 @@ document.getElementById("salvar").onclick = async () => {
 
     } else {
 
-        // ATUALIZAR ramal existente no Supabase
         const { error } = await supabase
             .from("ramais")
             .update({
