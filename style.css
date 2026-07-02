@@ -376,7 +376,84 @@ button.excluir:hover{
     box-shadow:0 0 0 3px rgba(0,184,217,.15);
 }
 
-/* BADGE DE CARGO */
+/* TÍTULOS DE SEÇÃO */
+
+.titulo-secao{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--texto-suave);
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    letter-spacing:.01em;
+}
+
+/* TABELA DE FAVORITOS */
+
+.tabela-favoritos{
+    width:100%;
+    border-collapse:collapse;
+    background:#FFFBEB;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--sombra);
+    border:1px solid #FDE68A;
+    margin-bottom:10px;
+}
+
+.tabela-favoritos th{
+    background:#F59E0B;
+    color:#fff;
+    padding:13px 18px;
+    text-align:left;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+}
+
+.tabela-favoritos td{
+    padding:14px 18px;
+    border-bottom:1px solid #FDE68A;
+    vertical-align:middle;
+    font-size:14.5px;
+}
+
+.tabela-favoritos tbody tr:last-child td{
+    border-bottom:none;
+}
+
+.tabela-favoritos tbody tr:hover{
+    background:#FEF3C7;
+}
+
+/* BOTÃO ESTRELA */
+
+.btn-favorito{
+    width:34px;
+    height:34px;
+    border:1px solid var(--borda);
+    border-radius:8px;
+    background:var(--cartao);
+    cursor:pointer;
+    font-size:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.2s;
+}
+
+.btn-favorito:hover{
+    background:#FEF3C7;
+    border-color:#F59E0B;
+}
+
+.btn-favorito.favoritado{
+    background:#FEF3C7;
+    border-color:#F59E0B;
+}
 
 .badge-cargo{
     display:inline-flex;
