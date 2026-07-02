@@ -233,6 +233,9 @@ tbody tr:hover td:first-child{
 td:first-child{
     font-weight:600;
     color:var(--navy);
+}
+
+.celula-nome{
     display:flex;
     align-items:center;
     gap:11px;
@@ -260,9 +263,11 @@ td.coluna-ramal{
     letter-spacing:.02em;
 }
 
-/* BOTÕES DE AÇÃO */
-
 td:last-child{
+    text-align:center;
+}
+
+.celula-acoes{
     display:flex;
     justify-content:center;
     align-items:center;
