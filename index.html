@@ -3,7 +3,206 @@
 
 <head><!DOCTYPE html>
 <html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Conexão Rastreadores - Ramais</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- CANVAS DE FUNDO ANIMADO -->
+    <canvas id="bgCanvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
+
+    <!-- TELA DE LOGIN -->
+    <div class="tela-login" id="telaLogin">
+
+        <div class="caixa-login">
+
+            <img src="logo.png.png" class="logo-login">
+
+            <h2>Acesso ao Sistema</h2>
+
+            <p class="subtitulo-login">Entre com suas credenciais para continuar</p>
+
+            <input
+                type="text"
+                id="loginUsuario"
+                placeholder="Usuário"
+                autocomplete="username">
+
+            <input
+                type="password"
+                id="loginSenha"
+                placeholder="Senha"
+                autocomplete="current-password">
+
+            <button id="btnEntrar">Entrar</button>
+
+            <p class="erro-login" id="erroLogin"></p>
+
+        </div>
+
+    </div>
+
+    <div class="container" id="appContainer" style="display:none;">
+
+        <header>
+
+            <div class="marca">
+
+                <div class="logo-wrapper">
+                    <img src="logo.png.png" class="logo">
+                </div>
+
+                <span class="status-conectado">
+                    <span class="ponto-pulsante"></span>
+                    Sistema online
+                </span>
+
+            </div>
+
+            <h1>Lista de Ramais</h1>
+
+            <button id="btnSair" class="botao-sair">Sair</button>
+
+        </header>
+
+        <div class="topo">
+
+            <input
+                type="text"
+                id="pesquisa"
+                placeholder="Pesquisar funcionário, setor ou ramal...">
+
+            <span class="contador" id="contador">0 ramais</span>
+
+            <button id="novo" class="somente-admin">
+                <i class="fa-solid fa-plus"></i>
+                Novo Ramal
+            </button>
+
+        </div>
+
+        <div class="modal" id="modal">
+
+            <div class="formulario">
+
+                <h2 id="tituloModal">Novo Ramal</h2>
+
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Nome">
+
+                <input
+                    type="text"
+                    id="setor"
+                    placeholder="Setor">
+
+                <input
+                    type="text"
+                    id="ramal"
+                    placeholder="Ramal">
+
+                <select id="cargo">
+                    <option value="">Sem cargo</option>
+                    <option value="Gestor">Gestor(a)</option>
+                    <option value="Supervisor">Supervisor(a)</option>
+                    <option value="Monitor">Monitor(a)</option>
+                </select>
+
+                <div class="botoes">
+
+                    <button id="salvar">Salvar</button>
+
+                    <button id="cancelar">Cancelar</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SEÇÃO DE FAVORITOS -->
+        <div id="secaoFavoritos" style="display:none;">
+
+            <h3 class="titulo-secao">
+                <span>⭐ Meus Favoritos</span>
+            </h3>
+
+            <table class="tabela-favoritos">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Setor</th>
+                        <th>Ramal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="listaFavoritos"></tbody>
+            </table>
+
+        </div>
+
+        <h3 class="titulo-secao" style="margin-top:28px;">
+            <span>📋 Todos os Ramais</span>
+        </h3>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Nome</th>
+                    <th>Setor</th>
+                    <th>Ramal</th>
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="listaRamais"></tbody>
+
+        </table>
+
+    </div>
+
+    <!-- BOTÃO FLUTUANTE DE WHATSAPP -->
+    <a
+        href="https://wa.me/5521998659147?text=Ol%C3%A1%2C%20estou%20com%20dificuldade%20para%20acessar%20o%20sistema%20de%20ramais."
+        target="_blank"
+        rel="noopener"
+        class="whatsapp-flutuante"
+        title="Falar com a Tecnologia no WhatsApp">
+
+        <i class="fa-brands fa-whatsapp"></i>
+
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="script.js"></script>
+
+    <script src="auth.js"></script>
+    <script src="bg.js"></script>
+
+</body>
+
+</html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
