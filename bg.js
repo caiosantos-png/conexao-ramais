@@ -37,7 +37,7 @@
     }
 
     // ── PARTÍCULAS + LINHAS ────────────────────────────
-    const parts = Array.from({ length: 185}, () => ({
+    const parts = Array.from({ length: 220}, () => ({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         vx: (Math.random() - .5) * .5,
