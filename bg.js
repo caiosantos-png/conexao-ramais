@@ -81,7 +81,7 @@
             x: Math.random() * W * 0.1,
             y: -20,
             len: 85 + Math.random() * 800,
-            speed: 15 + Math.random() * 22,
+            speed: 20 + Math.random() * 30,
             alpha: .9 + Math.random() * .8,
             angle: Math.PI / 4 + (Math.random() - .5) * .3,
         });
