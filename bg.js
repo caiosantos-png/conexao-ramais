@@ -37,7 +37,7 @@
     }
 
     // ── PARTÍCULAS + LINHAS ────────────────────────────
-    const parts = Array.from({ length: 60 }, () => ({
+    const parts = Array.from({ length: 185}, () => ({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         vx: (Math.random() - .5) * .5,
@@ -78,11 +78,11 @@
     const meteors = [];
     function spawnMeteor() {
         meteors.push({
-            x: Math.random() * W * 1.5,
+            x: Math.random() * W * 0.1,
             y: -20,
-            len: 80 + Math.random() * 120,
-            speed: 6 + Math.random() * 8,
-            alpha: .5 + Math.random() * .4,
+            len: 85 + Math.random() * 800,
+            speed: 15 + Math.random() * 22,
+            alpha: .9 + Math.random() * .8,
             angle: Math.PI / 4 + (Math.random() - .5) * .3,
         });
     }
@@ -94,18 +94,20 @@
             m.x += Math.cos(m.angle) * m.speed;
             m.y += Math.sin(m.angle) * m.speed;
             m.alpha -= .008;
+
+
             if (m.alpha <= 0 || m.y > H + 50) { meteors.splice(i,1); continue; }
             const tx = m.x - Math.cos(m.angle) * m.len;
             const ty = m.y - Math.sin(m.angle) * m.len;
             const g = ctx.createLinearGradient(tx, ty, m.x, m.y);
-            g.addColorStop(0, `rgba(0,184,217,0)`);
+            g.addColorStop(0, `rgba(248, 107, 51, 0)`);
             g.addColorStop(1, `rgba(255,255,255,${m.alpha})`);
             ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(m.x, m.y);
-            ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.strokeStyle = g; ctx.lineWidth = 4.0; ctx.stroke();
             // Brilho na ponta
             const gp = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 6);
             gp.addColorStop(0, `rgba(255,255,255,${m.alpha})`);
-            gp.addColorStop(1, `rgba(0,184,217,0)`);
+            gp.addColorStop(1, `rgba(236, 200, 0, 0)`);
             ctx.fillStyle = gp;
             ctx.beginPath(); ctx.arc(m.x, m.y, 6, 0, Math.PI*2); ctx.fill();
         }
@@ -117,8 +119,8 @@
         waveT += .008;
         for (let w = 0; w < 3; w++) {
             ctx.beginPath();
-            const amp   = 18 + w * 10;
-            const freq  = .008 - w * .002;
+            const amp   = 18 + w * 100;
+            const freq  = .008 - w * .004;
             const yBase = H * (.3 + w * .2);
             const alpha = .06 - w * .015;
             ctx.moveTo(0, yBase);
