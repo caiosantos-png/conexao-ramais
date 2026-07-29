@@ -37,7 +37,7 @@
     }
 
     // ── PARTÍCULAS + LINHAS ────────────────────────────
-    const parts = Array.from({ length: 220}, () => ({
+    const parts = Array.from({ length: 50}, () => ({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         vx: (Math.random() - .5) * .5,
@@ -78,10 +78,10 @@
     const meteors = [];
     function spawnMeteor() {
         meteors.push({
-            x: Math.random() * W * 0.1,
+            x: Math.random() * W * 0.7,
             y: -20,
-            len: 85 + Math.random() * 800,
-            speed: 20 + Math.random() * 30,
+            len: 85 + Math.random() * 500,
+            speed: 8 + Math.random() * 11,
             alpha: .9 + Math.random() * .8,
             angle: Math.PI / 4 + (Math.random() - .5) * .3,
         });
@@ -100,7 +100,7 @@
             const tx = m.x - Math.cos(m.angle) * m.len;
             const ty = m.y - Math.sin(m.angle) * m.len;
             const g = ctx.createLinearGradient(tx, ty, m.x, m.y);
-            g.addColorStop(0, `rgba(248, 107, 51, 0)`);
+            g.addColorStop(0, `rgba(51, 209, 248, 0)`);
             g.addColorStop(1, `rgba(255,255,255,${m.alpha})`);
             ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(m.x, m.y);
             ctx.strokeStyle = g; ctx.lineWidth = 4.0; ctx.stroke();
@@ -116,10 +116,10 @@
     // ── ONDAS SENOIDAIS ────────────────────────────────
     let waveT = 0;
     function drawWaves() {
-        waveT += .008;
+        waveT += .050;
         for (let w = 0; w < 3; w++) {
             ctx.beginPath();
-            const amp   = 18 + w * 100;
+            const amp   = 18 + w * 150;
             const freq  = .008 - w * .004;
             const yBase = H * (.3 + w * .2);
             const alpha = .06 - w * .015;
