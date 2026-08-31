@@ -1,200 +1,298 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-tema="escuro">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="logo.png.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070C16">
+    <meta name="description" content="Diretório corporativo de ramais da Conexão Rastreadores.">
 
-    <title>Conexão Rastreadores - Ramais</title>
+    <title>Conexão Rastreadores · Ramais</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" href="logo.png.png">
+
+    <!-- Aplica o tema salvo antes da primeira pintura (evita piscar) -->
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("tema");
+                if (t !== "claro" && t !== "escuro") {
+                    t = window.matchMedia("(prefers-color-scheme: light)").matches ? "claro" : "escuro";
+                }
+                document.documentElement.setAttribute("data-tema", t);
+            } catch (e) { }
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="stylesheet" href="style.css">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
-    <!-- CANVAS DE FUNDO ANIMADO -->
-    <canvas id="bgCanvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
+    <!-- Camada de fundo estática (gradiente + textura fina) -->
+    <div class="fundo" aria-hidden="true">
+        <span class="fundo-brilho fundo-brilho--a"></span>
+        <span class="fundo-brilho fundo-brilho--b"></span>
+        <span class="fundo-grade"></span>
+    </div>
 
-    <!-- TELA DE LOGIN -->
+    <!-- ══════════════ TELA DE LOGIN ══════════════ -->
     <div class="tela-login" id="telaLogin">
 
         <div class="caixa-login">
 
-            <img src="logo.png.png" class="logo-login">
+            <!-- Painel da marca -->
+            <aside class="login-marca">
 
-            <h2>Acesso ao Sistema</h2>
+                <div class="login-marca-topo">
+                    <img src="logo.png.png" class="logo-login" alt="Conexão Rastreadores">
+                    <div class="login-marca-nome">
+                        <strong>Conexão</strong>
+                        <span>Rastreadores</span>
+                    </div>
+                </div>
 
-            <p class="subtitulo-login">Entre com suas credenciais para continuar</p>
+                <div class="login-marca-corpo">
+                    <h1>Diretório<br>corporativo<br>de ramais.</h1>
+                    <p>Todos os contatos internos da empresa em um só lugar, sempre atualizados.</p>
+                </div>
 
-            <input
-                type="text"
-                id="loginUsuario"
-                placeholder="Usuário"
-                autocomplete="username">
+                <ul class="login-lista">
+                    <li><i class="fa-solid fa-bolt"></i> Busca instantânea por nome, setor ou ramal</li>
+                    <li><i class="fa-regular fa-star"></i> Favoritos para quem você mais liga</li>
+                    <li><i class="fa-solid fa-shield-halved"></i> Acesso restrito aos colaboradores</li>
+                </ul>
 
-            <input
-                type="password"
-                id="loginSenha"
-                placeholder="Senha"
-                autocomplete="current-password">
+                <span class="login-rodape">Tecnologia da Informação</span>
 
-            <button id="btnEntrar">Entrar</button>
+            </aside>
 
-            <p class="erro-login" id="erroLogin"></p>
+            <!-- Formulário -->
+            <div class="login-form">
+
+                <button class="btn-tema js-tema" type="button" title="Alternar tema" aria-label="Alternar tema">
+                    <i class="fa-solid fa-moon js-tema-icone"></i>
+                </button>
+
+                <img src="logo.png.png" class="logo-login logo-login--mobile" alt="Conexão Rastreadores">
+
+                <h2>Acesso ao Sistema</h2>
+                <p class="subtitulo-login">Entre com suas credenciais para continuar.</p>
+
+                <div class="campo">
+                    <label for="loginUsuario">Usuário</label>
+                    <div class="campo-caixa">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" id="loginUsuario" placeholder="Seu usuário" autocomplete="username"
+                            spellcheck="false">
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="loginSenha">Senha</label>
+                    <div class="campo-caixa">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="loginSenha" placeholder="••••••••"
+                            autocomplete="current-password">
+                    </div>
+                </div>
+
+                <button id="btnEntrar">
+                    <span>Entrar</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+                <p class="erro-login" id="erroLogin"></p>
+
+                <p class="login-ajuda">
+                    Problemas para acessar?
+                    <a href="https://wa.me/5521998659147?text=Ol%C3%A1%2C%20estou%20com%20dificuldade%20para%20acessar%20o%20sistema%20de%20ramais."
+                        target="_blank" rel="noopener">Falar com a TI</a>
+                </p>
+
+            </div>
 
         </div>
 
     </div>
 
+    <!-- ══════════════ APLICAÇÃO ══════════════ -->
     <div class="container" id="appContainer" style="display:none;">
 
-        <header>
+        <!-- Barra superior -->
+        <header class="barra-topo">
 
             <div class="marca">
-
                 <div class="logo-wrapper">
-                    <img src="logo.png.png" class="logo">
+                    <img src="logo.png.png" class="logo" alt="Conexão Rastreadores">
                 </div>
+                <div class="marca-texto">
+                    <strong>Conexão Rastreadores</strong>
+                    <span>Lista de Ramais</span>
+                </div>
+            </div>
+
+            <div class="barra-acoes">
 
                 <span class="status-conectado">
                     <span class="ponto-pulsante"></span>
                     Sistema online
                 </span>
 
+                <button class="btn-tema js-tema" type="button" title="Alternar tema" aria-label="Alternar tema">
+                    <i class="fa-solid fa-moon js-tema-icone"></i>
+                </button>
+
+                <button id="btnSair" class="botao-sair">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Sair</span>
+                </button>
+
             </div>
-
-            <h1>Lista de Ramais</h1>
-
-            <button id="btnSair" class="botao-sair">Sair</button>
 
         </header>
 
+        <!-- Cabeçalho da página -->
+        <div class="pagina-topo">
+            <div>
+                <span class="olho">Diretório interno</span>
+                <h1>Lista de Ramais</h1>
+                <p class="pagina-sub">Encontre rapidamente qualquer colaborador, setor ou número de ramal.</p>
+            </div>
+            <span class="contador" id="contador">0 ramais</span>
+        </div>
+
+        <!-- Barra de ferramentas -->
         <div class="topo">
 
-            <input
-                type="text"
-                id="pesquisa"
-                placeholder="Pesquisar funcionário, setor ou ramal...">
-
-            <span class="contador" id="contador">0 ramais</span>
+            <div class="campo-busca">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="pesquisa" placeholder="Pesquisar funcionário, setor ou ramal..."
+                    spellcheck="false">
+            </div>
 
             <button id="novo" class="somente-admin">
                 <i class="fa-solid fa-plus"></i>
-                Novo Ramal
+                <span>Novo Ramal</span>
             </button>
 
         </div>
 
+        <!-- Modal -->
         <div class="modal" id="modal">
 
             <div class="formulario">
 
                 <h2 id="tituloModal">Novo Ramal</h2>
 
-                <input
-                    type="text"
-                    id="nome"
-                    placeholder="Nome">
+                <div class="campo">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="Nome completo">
+                </div>
 
-                <input
-                    type="text"
-                    id="setor"
-                    placeholder="Setor">
+                <div class="campo">
+                    <label for="setor">Setor</label>
+                    <input type="text" id="setor" placeholder="Ex.: Financeiro">
+                </div>
 
-                <input
-                    type="text"
-                    id="ramal"
-                    placeholder="Ramal">
+                <div class="campo">
+                    <label for="ramal">Ramal</label>
+                    <input type="text" id="ramal" placeholder="Ex.: 1042">
+                </div>
 
-                <select id="cargo">
-                    <option value="">Sem cargo</option>
-                    <option value="Gestor">Gestor(a)</option>
-                    <option value="Supervisor">Supervisor(a)</option>
-                    <option value="Monitor">Monitor(a)</option>
-                </select>
+                <div class="campo">
+                    <label for="cargo">Cargo</label>
+                    <select id="cargo">
+                        <option value="">Sem cargo</option>
+                        <option value="Gestor">Gestor(a)</option>
+                        <option value="Supervisor">Supervisor(a)</option>
+                        <option value="Monitor">Monitor(a)</option>
+                    </select>
+                </div>
 
                 <div class="botoes">
-
-                    <button id="salvar">Salvar</button>
-
                     <button id="cancelar">Cancelar</button>
-
+                    <button id="salvar">Salvar</button>
                 </div>
 
             </div>
 
         </div>
 
-        <!-- SEÇÃO DE FAVORITOS -->
-        <div id="secaoFavoritos" style="display:none;">
+        <!-- Favoritos -->
+        <section id="secaoFavoritos" style="display:none;">
 
-            <h3 class="titulo-secao">
-                <span>⭐ Meus Favoritos</span>
+            <h3 class="titulo-secao titulo-secao--favoritos">
+                <i class="fa-solid fa-star"></i>
+                <span>Meus favoritos</span>
             </h3>
 
-            <table class="tabela-favoritos">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Setor</th>
-                        <th>Ramal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="listaFavoritos"></tbody>
-            </table>
+            <div class="cartao cartao--favoritos">
+                <table class="tabela-favoritos">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Setor</th>
+                            <th>Ramal</th>
+                            <th><span class="oculto-visual">Ações</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaFavoritos"></tbody>
+                </table>
+            </div>
 
-        </div>
+        </section>
 
-        <h3 class="titulo-secao" style="margin-top:28px;">
-            <span>📋 Todos os Ramais</span>
-        </h3>
+        <!-- Todos os ramais -->
+        <section class="secao-todos">
 
-        <table>
+            <h3 class="titulo-secao">
+                <i class="fa-solid fa-list-ul"></i>
+                <span>Todos os ramais</span>
+            </h3>
 
-            <thead>
+            <div class="cartao">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Setor</th>
+                            <th>Ramal</th>
+                            <th><span class="oculto-visual">Ações</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaRamais"></tbody>
+                </table>
+            </div>
 
-                <tr>
+        </section>
 
-                    <th>Nome</th>
-                    <th>Setor</th>
-                    <th>Ramal</th>
-                    <th></th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="listaRamais"></tbody>
-
-        </table>
+        <footer class="rodape">
+            <img src="logo.png.png" alt="">
+            <span>Conexão Rastreadores · Sistema interno de ramais</span>
+        </footer>
 
     </div>
 
-    <!-- BOTÃO FLUTUANTE DE WHATSAPP -->
-    <a
-        href="https://wa.me/5521998659147?text=Ol%C3%A1%2C%20estou%20com%20dificuldade%20para%20acessar%20o%20sistema%20de%20ramais."
-        target="_blank"
-        rel="noopener"
-        class="whatsapp-flutuante"
-        title="Falar com a Tecnologia no WhatsApp">
-
+    <!-- Suporte via WhatsApp -->
+    <a href="https://wa.me/5521998659147?text=Ol%C3%A1%2C%20estou%20com%20dificuldade%20para%20acessar%20o%20sistema%20de%20ramais."
+        target="_blank" rel="noopener" class="whatsapp-flutuante" title="Falar com a Tecnologia no WhatsApp"
+        aria-label="Falar com a Tecnologia no WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
-
     </a>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="supabase.js"></script>
-
     <script src="script.js"></script>
-
     <script src="auth.js"></script>
-    <script src="bg.js"></script>
+    <script src="tema.js"></script>
 
 </body>
 
