@@ -57,38 +57,45 @@ function iniciais(nome) {
 
 function badgeCargo(cargo) {
     if (!cargo) return "";
-    const cores = {
-        "Gestor":     { bg:"#EDE9FE", cor:"#6D28D9" },
-        "Supervisor": { bg:"#E0F7FA", cor:"#0090AD" },
-        "Monitor":    { bg:"#FFF3E0", cor:"#E65100" }
+    const classes = {
+        "Gestor":     "badge-gestor",
+        "Supervisor": "badge-supervisor",
+        "Monitor":    "badge-monitor"
     };
-    const c = cores[cargo] || { bg:"#F3F4F6", cor:"#6B7686" };
-    return `<span class="badge-cargo" style="background:${c.bg};color:${c.cor};">${cargo}</span>`;
+    const classe = classes[cargo] || "badge-neutro";
+    return `<span class="badge-cargo ${classe}">${cargo}</span>`;
 }
 
 function linhaRamal(item, ehAdmin, favs) {
     const favoritado = favs.includes(item.id);
+    const rotuloFav = favoritado ? "Remover dos favoritos" : "Adicionar aos favoritos";
     return `
     <tr>
-        <td>
+        <td class="celula-nome-td">
             <div class="celula-nome">
                 <span class="avatar-iniciais">${iniciais(item.nome)}</span>
-                ${item.nome}
+                <span class="nome-texto">${item.nome}</span>
                 ${badgeCargo(item.cargo)}
             </div>
         </td>
-        <td>${item.setor}</td>
-        <td class="coluna-ramal">${item.ramal}</td>
+        <td class="coluna-setor" data-rotulo="Setor">${item.setor}</td>
+        <td class="coluna-ramal" data-rotulo="Ramal">
+            <span class="chip-ramal"><i class="fa-solid fa-phone"></i>${item.ramal}</span>
+        </td>
         <td>
             <div class="celula-acoes">
                 <button class="btn-favorito ${favoritado ? "favoritado" : ""}"
                     onclick="toggleFavorito(${item.id})"
-                    title="${favoritado ? "Remover dos favoritos" : "Adicionar aos favoritos"}">
-                    ${favoritado ? "⭐" : "☆"}
+                    title="${rotuloFav}" aria-label="${rotuloFav}">
+                    <i class="${favoritado ? "fa-solid" : "fa-regular"} fa-star"></i>
                 </button>
                 ${ehAdmin ? `
-                <button class="editar" onclick="editar(${item.id})" title="Editar">✏️</button>
-                <button class="excluir" onclick="excluir(${item.id})" title="Excluir">🗑️</button>
+                <button class="editar" onclick="editar(${item.id})" title="Editar" aria-label="Editar">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="excluir" onclick="excluir(${item.id})" title="Excluir" aria-label="Excluir">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
                 ` : ""}
             </div>
         </td>
@@ -132,7 +139,11 @@ function listar(lista = ramais) {
     if (lista.length === 0) {
         tabela.innerHTML = `
         <tr class="tabela-vazia">
-            <td colspan="4">Nenhum ramal encontrado.</td>
+            <td colspan="4">
+                <span class="vazio-icone"><i class="fa-regular fa-address-book"></i></span>
+                <span class="vazio-titulo">Nenhum ramal encontrado</span>
+                <span class="vazio-dica">Tente outro nome, setor ou número.</span>
+            </td>
         </tr>
         `;
         return;
